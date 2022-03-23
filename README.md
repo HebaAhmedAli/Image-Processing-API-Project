@@ -2,19 +2,19 @@
 This project access a specific end point to resize images with a given image, width and height in the url.
 
 To build the code:
-npm run build
+- npm run build
 
 To build the code and run the index.ts:
-npm run dev
+- npm run dev
 
 To build the code and run the index.js:
-npm run start
+- npm run start
 
 To build the code and run the tests:
-npm run test
+- npm run test
 
 To lint the code and fix it:
-npm run lint:f
+- npm run lint:f
 
 Endpoint test example that should success:
 http://localhost:3000/resizing?image=santamonica&width=100&height=100
