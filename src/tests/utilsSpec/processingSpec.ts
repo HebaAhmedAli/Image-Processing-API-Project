@@ -14,4 +14,14 @@ describe('Test the resizing function', (): void => {
                 await resizeImage(inputImagePath, outputImagePath, outputDir)
         ).not.toThrowError();
     });
+    it('The resizeImage function should return Success message if take valid inputImagePath, outputImagePath, outputDir', async (): Promise<void> => {
+        const inputImagePath: string =
+            path.resolve('./') + '/assets/images/santamonica.jpg';
+        const outputImagePath: string =
+            path.resolve('./') + '/assets/thumb/santamonica_70_70.jpg';
+        const outputDir: string = path.resolve('./') + '/assets/thumb/';
+        const resizeErrorCodeAndMessage: ErrorCodeAndMessage =
+            await resizeImage(inputImagePath, outputImagePath, outputDir);
+        expect(resizeErrorCodeAndMessage.message).toEqual('Success');
+    });
 });
