@@ -1,27 +1,55 @@
 import express from 'express';
 import path from 'path';
 import { validateInputs, ErrorCodeAndMessage } from '../../utils/validate';
+import { existsSync } from 'fs';
+import resizeImage from '../../utils/processing';
 
 const resizingRoute: express.Router = express.Router();
 
-resizingRoute.get('/', (req: express.Request, res: express.Response) => {
-    const errorCodeAndMessage: ErrorCodeAndMessage = validateInputs(
+resizingRoute.get('/', async (req: express.Request, res: express.Response) => {
+    const validateErrorCodeAndMessage: ErrorCodeAndMessage = validateInputs(
         req.query.image as string,
         req.query.width as string,
         req.query.height as string
     );
-    if (errorCodeAndMessage.code === 0) {
-        // TODO: Resize logic.
+    if (validateErrorCodeAndMessage.code === 0) {
         const imageName: string = req.query.image as string;
         const imageWidth = Number(req.query.width as string);
         const imageHeight = Number(req.query.height as string);
-        const imgLocation: string =
+        const inputImagePath: string =
             path.resolve('./') + '/assets/images/' + imageName + '.jpg';
-        res.sendFile(imgLocation);
+        const outputImagePath: string =
+            path.resolve('./') +
+            '/assets/thumb/' +
+            imageName +
+            '_' +
+            imageWidth +
+            '_' +
+            imageHeight +
+            '.jpg';
+        if (existsSync(outputImagePath)) {
+            // First check if output image already exist return it.
+            res.sendFile(outputImagePath);
+        } else {
+            // If not exisit resize it.
+            const resizeErrorCodeAndMessage: ErrorCodeAndMessage =
+                await resizeImage(
+                    inputImagePath,
+                    outputImagePath,
+                    path.resolve('./') + '/assets/thumb/'
+                );
+            if (resizeErrorCodeAndMessage.code === 0) {
+                res.sendFile(outputImagePath);
+            } else {
+                return res
+                    .status(resizeErrorCodeAndMessage.code)
+                    .send(resizeErrorCodeAndMessage.message);
+            }
+        }
     } else {
         return res
-            .status(errorCodeAndMessage.code)
-            .send(errorCodeAndMessage.message);
+            .status(validateErrorCodeAndMessage.code)
+            .send(validateErrorCodeAndMessage.message);
     }
 });
 

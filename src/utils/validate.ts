@@ -41,9 +41,9 @@ const validateInputs = (
             message: 'Bad request,  the provided (height) is not a number.',
         };
     }
-    const imgLocation: string =
+    const inputImagePath: string =
         path.resolve('./') + '/assets/images/' + imageName + '.jpg';
-    if (!existsSync(imgLocation)) {
+    if (!existsSync(inputImagePath)) {
         return {
             code: 404,
             message: 'Resource not found, there is no image with this name',
