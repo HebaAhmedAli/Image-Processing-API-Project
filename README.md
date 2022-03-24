@@ -13,8 +13,11 @@ To build the code and run the index.js:
 To build the code and run the tests:
 - npm run test
 
-To lint the code and fix it:
+To lint the code (with eslint and prettier) and fix it:
 - npm run lint:f
+
+To run the prettier alone: (added)
+- npm run format
 
 Endpoint test example that should success:
 http://localhost:3000/resizing?image=santamonica&width=100&height=100

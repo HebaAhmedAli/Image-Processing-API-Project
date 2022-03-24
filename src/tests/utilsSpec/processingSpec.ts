@@ -11,7 +11,13 @@ describe('Test the resizing function', (): void => {
         const outputDir: string = path.resolve('./') + '/assets/thumb/';
         expect(
             async (): Promise<ErrorCodeAndMessage> =>
-                await resizeImage(inputImagePath, outputImagePath, outputDir)
+                await resizeImage(
+                    inputImagePath,
+                    outputImagePath,
+                    outputDir,
+                    80,
+                    80
+                )
         ).not.toThrowError();
     });
     it('The resizeImage function should return Success message if take valid inputImagePath, outputImagePath, outputDir', async (): Promise<void> => {
@@ -21,7 +27,13 @@ describe('Test the resizing function', (): void => {
             path.resolve('./') + '/assets/thumb/santamonica_70_70.jpg';
         const outputDir: string = path.resolve('./') + '/assets/thumb/';
         const resizeErrorCodeAndMessage: ErrorCodeAndMessage =
-            await resizeImage(inputImagePath, outputImagePath, outputDir);
+            await resizeImage(
+                inputImagePath,
+                outputImagePath,
+                outputDir,
+                70,
+                70
+            );
         expect(resizeErrorCodeAndMessage.message).toEqual('Success');
     });
 });

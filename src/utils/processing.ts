@@ -5,13 +5,17 @@ import fs from 'fs';
 const resizeImage = async (
     inputImagePath: string,
     outputImagePath: string,
-    outputDir: string
+    outputDir: string,
+    width: number,
+    height: number
 ): Promise<ErrorCodeAndMessage> => {
     try {
         if (!fs.existsSync(outputDir)) {
             fs.mkdirSync(outputDir);
         }
-        await sharp(inputImagePath).resize(200, 300).toFile(outputImagePath);
+        await sharp(inputImagePath)
+            .resize(width, height)
+            .toFile(outputImagePath);
         return { code: 0, message: 'Success' };
     } catch (error) {
         console.log(error);

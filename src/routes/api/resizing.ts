@@ -36,7 +36,9 @@ resizingRoute.get('/', async (req: express.Request, res: express.Response) => {
                 await resizeImage(
                     inputImagePath,
                     outputImagePath,
-                    path.resolve('./') + '/assets/thumb/'
+                    path.resolve('./') + '/assets/thumb/',
+                    imageWidth,
+                    imageHeight
                 );
             if (resizeErrorCodeAndMessage.code === 0) {
                 res.sendFile(outputImagePath);
